@@ -56,8 +56,8 @@ export default function Home() {
               </Button>
             </div>
             <p className="mt-10 text-sm text-paper-muted">
-              Coached by a four-year NCAA Division III collegiate goalie,
-              Hanover College.
+              Coached by {siteConfig.coach.name}, a four-year NCAA Division
+              III collegiate goalie, Hanover College.
             </p>
           </div>
 
@@ -88,11 +88,18 @@ export default function Home() {
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
               Legacy Lacrosse Training was built around a simple idea: goalies
               need dedicated, position-specific coaching, not leftover reps at
-              the end of field practice. Our coach is a four-year NCAA
-              Division III varsity goalie, a graduate of Hanover College, who
-              has spent years refining the technical and mental sides of the
-              position — and now brings that same approach to youth and high
-              school goalies across the Ann Arbor and Metro Detroit area.
+              the end of field practice. {siteConfig.coach.name} is a
+              four-year NCAA Division III varsity goalie, a graduate of
+              Hanover College, who has spent years refining the technical
+              and mental sides of the position — and now brings that same
+              approach to youth and high school goalies across the Ann Arbor
+              and Metro Detroit area.
+            </p>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink/65">
+              He&apos;s coached goalies since 2016, led the South Bend Bears
+              high school team to a state championship, and most recently
+              coached goalies at Trine University, ranked #2 nationally in
+              Scoring Defense for the 2025–26 season.
             </p>
             <Button href="/about" variant="outline-dark" className="mt-8">
               More About the Coach
@@ -123,7 +130,7 @@ export default function Home() {
                   {s.name}
                 </h3>
                 <p className="mt-2 text-sm font-medium uppercase tracking-[0.06em] text-ink-muted">
-                  {s.format}
+                  {s.athleteCount} · {s.duration}
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-ink/65">
                   {s.description}

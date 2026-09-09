@@ -40,8 +40,9 @@ yarn-error.log*
 # vercel
 .vercel
 
-# claude code local settings
-.claude/settings.local.json
+# local editor/tooling config (not needed in version control)
+.claude/
+AGENTS.md
 
 # typescript
 *.tsbuildinfo
