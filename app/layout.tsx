@@ -39,7 +39,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <Header />
-        <main id="main-content" className="flex-1">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 focus:outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+        >
           {children}
         </main>
         <Footer />
