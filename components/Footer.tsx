@@ -22,7 +22,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-paper-muted">
               Site
             </p>
             <ul className="mt-4 space-y-3 text-sm">
@@ -37,13 +37,13 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-paper/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-paper-muted">
               Serving
             </p>
             <p className="mt-4 text-sm leading-relaxed text-paper/75">
               {siteConfig.location.serviceArea.join(" · ")}
             </p>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-paper/45">
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-paper-muted">
               Contact
             </p>
             <p className="mt-4 text-sm text-paper/75">
@@ -54,7 +54,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-line-invert pt-8 text-xs text-paper/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-4 border-t border-line-invert pt-8 text-xs text-paper-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {year} {siteConfig.name}. All rights reserved.
           </p>

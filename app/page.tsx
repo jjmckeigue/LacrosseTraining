@@ -1,31 +1,10 @@
 import Button from "@/components/ui/Button";
 import PlaceholderImage from "@/components/ui/PlaceholderImage";
-import Testimonials from "@/components/Testimonials";
+import Testimonials, { type Testimonial } from "@/components/Testimonials";
+import { services } from "@/lib/services";
 import { siteConfig } from "@/lib/site-config";
 
-const offerings = [
-  {
-    index: "01",
-    name: "Private Goalie Training",
-    format: "One athlete · ~60 minutes",
-    description:
-      "Fully personalized reps built around the athlete's specific footwork, hands, and habits — with detail no group setting can offer.",
-  },
-  {
-    index: "02",
-    name: "Partner Training",
-    format: "Two athletes · ~60–75 minutes",
-    description:
-      "Competitive, position-specific reps at a lower per-player cost. Ideal for two goalies who push each other.",
-  },
-  {
-    index: "03",
-    name: "Small Group Training",
-    format: "3–5 goalies · ~75–90 minutes",
-    description:
-      "Station-based, game-speed training that mirrors the pace and pressure of a real game.",
-  },
-];
+const testimonials: Testimonial[] = [];
 
 const differentiators = [
   "Position-specific instruction every session — not general stick-skill drills built for the rest of the field.",
@@ -76,7 +55,7 @@ export default function Home() {
                 View Training Options
               </Button>
             </div>
-            <p className="mt-10 text-sm text-paper/50">
+            <p className="mt-10 text-sm text-paper-muted">
               Coached by a four-year NCAA Division III collegiate goalie,
               Hanover College.
             </p>
@@ -100,7 +79,7 @@ export default function Home() {
             className="aspect-square w-full max-w-md"
           />
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
               Meet Your Coach
             </p>
             <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
@@ -109,12 +88,11 @@ export default function Home() {
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
               Legacy Lacrosse Training was built around a simple idea: goalies
               need dedicated, position-specific coaching, not leftover reps at
-              the end of field practice. Our coach is a four-year varsity
-              starter and NCAA Division III collegiate goalie, a graduate of
-              Hanover College, who has spent years refining the technical and
-              mental sides of the position — and now brings that same
-              approach to youth and high school goalies across the Ann Arbor
-              and Metro Detroit area.
+              the end of field practice. Our coach is a four-year NCAA
+              Division III varsity goalie, a graduate of Hanover College, who
+              has spent years refining the technical and mental sides of the
+              position — and now brings that same approach to youth and high
+              school goalies across the Ann Arbor and Metro Detroit area.
             </p>
             <Button href="/about" variant="outline-dark" className="mt-8">
               More About the Coach
@@ -127,7 +105,7 @@ export default function Home() {
       <section className="border-b border-line bg-paper-2/60">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
               Training Offerings
             </p>
             <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
@@ -136,19 +114,19 @@ export default function Home() {
           </div>
 
           <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-12">
-            {offerings.map((o) => (
-              <div key={o.index} className="border-t border-line pt-6">
+            {services.map((s) => (
+              <div key={s.index} className="border-t border-line pt-6">
                 <span className="font-display text-sm text-accent-deep">
-                  {o.index}
+                  {s.index}
                 </span>
                 <h3 className="mt-3 font-display text-2xl tracking-tight text-ink">
-                  {o.name}
+                  {s.name}
                 </h3>
-                <p className="mt-2 text-sm font-medium uppercase tracking-[0.06em] text-ink/45">
-                  {o.format}
+                <p className="mt-2 text-sm font-medium uppercase tracking-[0.06em] text-ink-muted">
+                  {s.format}
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-ink/65">
-                  {o.description}
+                  {s.description}
                 </p>
               </div>
             ))}
@@ -164,7 +142,7 @@ export default function Home() {
       <section className="border-b border-line">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-10 lg:py-32">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
               Why Goalie-Specific Training
             </p>
             <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
@@ -206,7 +184,7 @@ export default function Home() {
           <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
             {methodology.map((item, i) => (
               <div key={item} className="border-t border-line-invert pt-4">
-                <span className="text-xs font-semibold text-paper/40">
+                <span className="text-xs font-semibold text-paper-muted">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <p className="mt-1 text-sm font-medium text-paper/85">
@@ -219,24 +197,26 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/45">
-            What Families Are Saying
-          </p>
-          <h2 className="mt-4 max-w-2xl font-display text-4xl tracking-tight text-ink">
-            Built on trust, one session at a time.
-          </h2>
-          <div className="mt-16">
-            <Testimonials testimonials={[]} />
+      {testimonials.length > 0 && (
+        <section className="border-b border-line">
+          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
+              What Families Are Saying
+            </p>
+            <h2 className="mt-4 max-w-2xl font-display text-4xl tracking-tight text-ink">
+              Built on trust, one session at a time.
+            </h2>
+            <div className="mt-16">
+              <Testimonials testimonials={testimonials} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Service area */}
       <section className="border-b border-line bg-paper-2/60">
         <div className="mx-auto max-w-7xl px-6 py-24 text-center lg:px-10 lg:py-28">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/45">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
             Service Area
           </p>
           <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl tracking-tight text-ink">
@@ -245,7 +225,7 @@ export default function Home() {
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-ink/60">
             {siteConfig.location.serviceArea.join(" · ")}
           </p>
-          <p className="mx-auto mt-4 max-w-md text-sm text-ink/45">
+          <p className="mx-auto mt-4 max-w-md text-sm text-ink-muted">
             Don&apos;t see your town? Reach out — travel may be available for
             small-group sessions.
           </p>

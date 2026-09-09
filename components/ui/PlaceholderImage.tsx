@@ -35,7 +35,7 @@ export default function PlaceholderImage({
       <div className="px-6 text-center">
         <p
           className={`text-xs font-semibold uppercase tracking-[0.15em] ${
-            isDark ? "text-paper/60" : "text-ink/45"
+            isDark ? "text-paper-muted" : "text-ink-muted"
           }`}
         >
           Photo needed
@@ -50,7 +50,7 @@ export default function PlaceholderImage({
         {spec && (
           <p
             className={`mt-1 text-xs ${
-              isDark ? "text-paper/40" : "text-ink/35"
+              isDark ? "text-paper-muted" : "text-ink-muted"
             }`}
           >
             {spec}

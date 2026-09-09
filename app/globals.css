@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
-:root {
+@theme {
   /* Ink — near-black navy. Primary text and dominant dark surfaces. */
   --color-ink: #0b1220;
   --color-ink-2: #14213a;
+  /* Muted-but-accessible ink, for secondary text on paper (>= 4.5:1). */
+  --color-ink-muted: #5a6478;
 
   /* Paper — warm off-white. Primary background. */
   --color-paper: #f8f4ec;
   --color-paper-2: #eee6d6;
+  /* Muted-but-accessible paper, for secondary text on ink (>= 4.5:1). */
+  --color-paper-muted: #948c7a;
 
   /* Accent — restrained brass/gold. Reserved for booking CTAs and key marks. */
   --color-accent: #b3812b;
-  --color-accent-deep: #8c6423;
+  --color-accent-deep: #805a1e;
 
   /* Hairlines */
   --color-line: rgb(11 18 32 / 12%);
@@ -19,15 +23,6 @@
 }
 
 @theme inline {
-  --color-ink: var(--color-ink);
-  --color-ink-2: var(--color-ink-2);
-  --color-paper: var(--color-paper);
-  --color-paper-2: var(--color-paper-2);
-  --color-accent: var(--color-accent);
-  --color-accent-deep: var(--color-accent-deep);
-  --color-line: var(--color-line);
-  --color-line-invert: var(--color-line-invert);
-
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-inter);
 }
