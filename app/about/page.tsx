@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: `About ${siteConfig.coach.name}`,
-  description: `${siteConfig.coach.name}, founder of ${siteConfig.name}, is a four-year NCAA Division III varsity goalie (Hanover College) who has coached goalies since 2016, including a state championship with the South Bend Bears and a #2 national Scoring Defense ranking at Trine University.`,
+  description: `${siteConfig.coach.name}, a four-year NCAA Division III goalie, founded ${siteConfig.name} and coaches youth and high school goalies across Ann Arbor and Metro Detroit.`,
 };
 
 export default function About() {

@@ -7,8 +7,10 @@ serving Ann Arbor, Ypsilanti, and Metro Detroit.
 
 - [Next.js](https://nextjs.org) (App Router) + TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com) (theme defined in `app/globals.css`)
-- [Cal.com](https://cal.com) for booking/availability (planned — embedded, not
-  custom-built)
+- [Cal.com](https://cal.com) for booking/availability, embedded (not
+  custom-built) at `/book`. Cal.com owns scheduling entirely; see
+  [Booking (Cal.com) setup](#booking-calcom-setup) for the account
+  configuration still required before it's live.
 - [Resend](https://resend.com) for transactional email (planned)
 - [Vercel](https://vercel.com) for deployment
 - [Playwright](https://playwright.dev) for end-to-end testing
@@ -48,14 +50,23 @@ app/                  App Router routes, layouts, and global styles
   page.tsx              Homepage
   training/page.tsx      Training page (formats, philosophy, CTA)
   about/page.tsx          About page (coach background, philosophy, CTA)
-  globals.css            Tailwind v4 theme (colors, fonts)
+  book/page.tsx            Booking page: service selector + Cal.com embed
+  icon.png                 App icon (brand mark), auto-served by Next.js
+  globals.css               Tailwind v4 theme (colors, fonts)
 components/            Reusable and page-level components
   ui/                     Generic UI primitives (Button)
+  booking/                 ServiceSelector (server) + CalBookingEmbed
+                            (client boundary for the Cal.com widget)
 lib/                    Typed, non-visual source-of-truth data
   site-config.ts          Brand copy, nav links, service-area, coach name
-  services.ts              Training offerings — single source of truth for
-                            the homepage summary and the Training page
+  services.ts              Training offerings, single source of truth for
+                            the homepage summary, Training page, and
+                            booking (each offering's Cal.com event slug
+                            lives here as `calSlug`)
+  cal.ts                    Builds a Cal.com booking link from a service;
+                             the one place that knows the Cal.com username
 public/images/          Production photography (see below)
+public/brand/            Logo family (see Brand assets below)
 e2e/                    Playwright end-to-end tests
 ```
 
@@ -66,12 +77,101 @@ real duplication to justify them.
 
 ## Future integrations
 
-Add Supabase, Stripe, Cal.com, Resend, a Contact page, a contact form, or
-booking functionality only when a concrete feature needs them — e.g. a lead
-CRM, session history, or payment records. This is a small coaching business
-site, not an enterprise app; prefer boring, managed functionality over
-custom infrastructure unless custom behavior materially improves the
-customer experience or the business.
+Add Supabase, Stripe, Resend, a Contact page, or a contact form only when a
+concrete feature needs them, e.g. a lead CRM, session history, or payment
+records. This is a small coaching business site, not an enterprise app;
+prefer boring, managed functionality over custom infrastructure unless
+custom behavior materially improves the customer experience or the
+business. Cal.com (booking) is already integrated; see
+[Booking (Cal.com) setup](#booking-calcom-setup) for what's still required.
+
+## Booking (Cal.com) setup
+
+`/book` embeds Cal.com inline; the app never talks to Cal.com's API
+directly and owns no scheduling logic. Cal.com owns availability, conflict
+detection, time zones, booking creation, rescheduling, cancellations,
+limits, and buffers.
+
+**Still required from the business owner before this goes live:**
+
+1. **Cal.com account**: done. The live account is `jackson-mckeigue-nhhaaa`
+   (default in `lib/cal.ts`; override with `NEXT_PUBLIC_CAL_USERNAME` if it
+   ever changes, see [Environment variables](#environment-variables)).
+2. **Event types**: only one exists today, `lacrosse-training`, and all
+   three offerings in `lib/services.ts` point at it for now (each
+   offering's `calSlug` field). To give each format its own event type
+   (recommended so Cal.com can enforce per-format duration/limits), create
+   two more event types and update `calSlug` for Partner and Small Group
+   to their new slugs; Private can keep using `lacrosse-training` or move
+   to a dedicated slug too, up to you.
+3. **Add booking questions** to each event type (keep it minimal and
+   parent/guardian-first; suggested stable identifiers in parentheses):
+   - Parent/Guardian Name, required (`parent-guardian-name`)
+   - Parent/Guardian Email, required (`parent-guardian-email`)
+   - Phone, optional (`phone`)
+   - Athlete First Name, required (`athlete-first-name`)
+   - Graduation Year, required (`graduation-year`)
+   - School/Club, optional (`school-club`)
+   - Experience Level, optional (`experience-level`)
+   - What would you like to work on?, optional (`session-goals`)
+
+   Don't collect a home address, full date of birth, medical information,
+   or other information the business doesn't operationally need.
+4. **Decide the Partner/Small Group capacity model** and configure Cal.com
+   to match; the app makes no assumption either way:
+   - **Closed group** (default-friendly): one parent books the whole slot
+     and supplies the group's info. No Cal.com "seats" needed.
+   - **Open enrollment**: separate families independently book seats in
+     the same slot. Enable Cal.com's seats feature on the Partner and
+     Small Group event types and set the seat count there.
+
+   Private Goalie Training should always stay a single booking/athlete
+   slot regardless of which model is chosen for the other two.
+5. **Confirm scheduling settings** in Cal.com (not in this app): the live
+   event currently shows `America/New York`, functionally the same UTC
+   offset as `America/Detroit` but worth explicitly setting the latter (or
+   whichever is correct) rather than leaving it as a default. Also confirm:
+   a connected conflict calendar, real evening/weekend availability, a
+   sensible booking horizon, minimum notice, before/after session buffers,
+   and a rescheduling/cancellation policy.
+6. **Location**: the booking page currently reads "Ann Arbor / Southeast
+   Michigan, confirmed after booking" rather than a residential address.
+   Once a real recurring location exists, move it into each event type's
+   Cal.com location field instead of (or in addition to) this page copy.
+
+Verified live in a real browser against the real account: the calendar,
+available dates, and time slots all render correctly with no console
+errors, in both the `month_view` desktop layout and the
+`useSlotsViewOnSmallScreen` mobile layout. `npm run test:e2e` still only
+checks this app's own state (selector, URL handling, summary text) and
+intentionally does not depend on Cal.com's production availability, so
+re-run the live check above if the account or event types change.
+
+The embed uses Cal.com's own namespaced pattern
+(`getCalApi({ namespace })` / `<Cal namespace .../>`, namespace = the
+offering's `calSlug`), matching the snippet Cal.com's dashboard generates
+for this account. An earlier version that omitted the namespace threw an
+"iframe doesn't exist" error from inside `@calcom/embed-react` itself;
+namespacing resolved it.
+
+## Brand assets
+
+The logo family lives in `public/brand/`, sourced from finished exports
+(not the raw design-tool SVGs, which reference an external raster texture
+file that isn't part of the delivered asset set):
+
+| File                              | Use                                     |
+| ---------------------------------- | ------------------------------------------ |
+| `logo-horizontal-on-dark.png`       | Header wordmark (site header is always on `bg-ink`) |
+| `logo-horizontal-on-light.png`       | Wordmark for paper/light surfaces, not currently used in the UI |
+| `logo-mark-on-dark.png`               | Emblem only, for dark surfaces |
+| `logo-mark-on-light.png`               | Emblem only, for light surfaces; also the source for `app/icon.png` (favicon/app icon) |
+
+The canonical brand blue is `#0b486d`, available as the `--color-brand-blue`
+token in `app/globals.css`. It's the logo's own color, not a replacement
+for the site's `ink` color; don't swap `ink` usages to it without a concrete
+visual reason. Don't recolor, distort, or add effects (glow, shadow,
+gradient, animation) to the logo files themselves.
 
 ## Photography
 
@@ -95,8 +195,11 @@ number (email is set in `lib/site-config.ts`).
 
 ## Environment variables
 
-No environment variables are required yet. When integrations (Cal.com,
-Resend, etc.) are added:
+| Variable                   | Required | Purpose                                                        |
+| --------------------------- | -------- | ---------------------------------------------------------------- |
+| `NEXT_PUBLIC_CAL_USERNAME`   | No | Cal.com username/team slug; see [Booking (Cal.com) setup](#booking-calcom-setup). Defaults to the real account (`jackson-mckeigue-nhhaaa`) in `lib/cal.ts`; only set this if the account changes. |
+
+When further integrations (Resend, etc.) are added:
 
 - Keep secrets in an untracked `.env.local` (the `.gitignore` already
   excludes `.env*`).

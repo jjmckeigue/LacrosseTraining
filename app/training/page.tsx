@@ -138,7 +138,7 @@ export default function Training() {
                     ))}
                   </ul>
                   <Button
-                    href="/book"
+                    href={`/book?service=${s.slug}`}
                     variant="outline-dark"
                     className="self-start"
                   >
@@ -157,7 +157,7 @@ export default function Training() {
           <div className="relative aspect-[3/2] w-full overflow-hidden border border-line bg-paper-2 lg:order-1">
             <Image
               src="/images/training-goalie-clearing.jpg"
-              alt="Lacrosse goalie controlling a rebound in front of the net"
+              alt="Lacrosse goalie preparing an outlet pass after a save"
               fill
               sizes="(min-width: 1024px) 45vw, 100vw"
               className="object-cover"

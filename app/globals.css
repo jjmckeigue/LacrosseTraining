@@ -17,6 +17,10 @@
   --color-accent: #b3812b;
   --color-accent-deep: #805a1e;
 
+  /* Canonical brand blue from the logo family. Not a UI color swap for
+     ink; use only where the brand mark itself calls for it. */
+  --color-brand-blue: #0b486d;
+
   /* Hairlines */
   --color-line: rgb(11 18 32 / 12%);
   --color-line-invert: rgb(248 244 236 / 16%);

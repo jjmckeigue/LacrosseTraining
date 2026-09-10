@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
@@ -12,6 +13,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const menuId = useId();
+  const isBookingCurrent = pathname === bookingCta.href;
 
   useEffect(() => {
     if (!open) return;
@@ -38,13 +40,16 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-line-invert bg-ink text-paper">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-        <Link href="/" className="flex flex-col leading-none" onClick={() => setOpen(false)}>
-          <span className="font-display text-2xl tracking-tight">
-            {siteConfig.shortName}
-          </span>
-          <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-paper/55">
-            Lacrosse Training
-          </span>
+        <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
+          <span className="sr-only">{siteConfig.name}</span>
+          <Image
+            src="/brand/logo-horizontal-on-dark.png"
+            alt=""
+            width={1474}
+            height={443}
+            priority
+            className="h-10 w-auto sm:h-12"
+          />
         </Link>
 
         <nav className="hidden items-center gap-10 lg:flex" aria-label="Primary navigation">
@@ -66,7 +71,11 @@ export default function Header() {
               );
             })}
           </ul>
-          <Button href={bookingCta.href} variant="primary">
+          <Button
+            href={bookingCta.href}
+            variant="primary"
+            aria-current={isBookingCurrent ? "page" : undefined}
+          >
             {bookingCta.label}
           </Button>
         </nav>
@@ -118,6 +127,7 @@ export default function Header() {
             href={bookingCta.href}
             variant="primary"
             className="mt-6 w-full"
+            aria-current={isBookingCurrent ? "page" : undefined}
             onClick={() => setOpen(false)}
           >
             {bookingCta.label}

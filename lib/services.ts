@@ -12,6 +12,15 @@ export type ServiceOffering = {
   description: string;
   bestFor: string;
   focusAreas: string[];
+  /** Cal.com event-type slug. Combined with the Cal.com username in
+   * lib/cal.ts to form the booking link. Each slug must exist as a real
+   * event type in Cal.com before booking will work for that offering.
+   *
+   * Only one event type exists in Cal.com today ("lacrosse-training"), so
+   * all three offerings point at it for now. Once dedicated Private/
+   * Partner/Small Group event types are created in Cal.com, update each
+   * offering's calSlug to its own slug. */
+  calSlug: string;
 };
 
 export const services: ServiceOffering[] = [
@@ -30,6 +39,7 @@ export const services: ServiceOffering[] = [
       "Hand speed & save technique",
       "Individual habit correction",
     ],
+    calSlug: "lacrosse-training",
   },
   {
     slug: "partner",
@@ -46,6 +56,7 @@ export const services: ServiceOffering[] = [
       "Angles under pressure",
       "In-crease communication",
     ],
+    calSlug: "lacrosse-training",
   },
   {
     slug: "small-group",
@@ -62,5 +73,10 @@ export const services: ServiceOffering[] = [
       "Game-speed shot volume",
       "Rebound control & clearing",
     ],
+    calSlug: "lacrosse-training",
   },
 ];
+
+export function getServiceBySlug(slug: string | undefined): ServiceOffering | undefined {
+  return services.find((service) => service.slug === slug);
+}
