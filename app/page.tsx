@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Button from "@/components/ui/Button";
-import PlaceholderImage from "@/components/ui/PlaceholderImage";
 import Testimonials, { type Testimonial } from "@/components/Testimonials";
 import { services } from "@/lib/services";
 import { siteConfig } from "@/lib/site-config";
@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 const testimonials: Testimonial[] = [];
 
 const differentiators = [
-  "Position-specific instruction every session — not general stick-skill drills built for the rest of the field.",
+  "Position-specific instruction every session, not general stick-skill drills built for the rest of the field.",
   "Small athlete-to-coach ratios, always.",
   "Game-speed shot volume from realistic angles and release points.",
   "College-level technical detail on footwork, hands, and angles.",
@@ -43,7 +43,7 @@ export default function Home() {
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-paper/70">
               Private and small-group training for youth and high school
-              goalies across Ann Arbor, Ypsilanti, and Metro Detroit — built
+              goalies across Ann Arbor, Ypsilanti, and Metro Detroit, built
               around footwork, hand speed, angles, and the decision-making
               that separates good goalies from great ones.
             </p>
@@ -56,28 +56,37 @@ export default function Home() {
               </Button>
             </div>
             <p className="mt-10 text-sm text-paper-muted">
-              Coached by a four-year NCAA Division III collegiate goalie,
-              Hanover College.
+              Coached by {siteConfig.coach.name}, a four-year NCAA Division
+              III collegiate goalie, Hanover College.
             </p>
           </div>
 
-          <PlaceholderImage
-            tone="dark"
-            label="Goalie mid-save, game action shot"
-            spec="Portrait or square orientation, high-resolution"
-            className="aspect-[4/5] w-full lg:aspect-[3/4]"
-          />
+          <div className="relative aspect-[2/3] w-full overflow-hidden border border-line-invert bg-ink-2">
+            <Image
+              src="/images/homepage-hero-goalie-game.jpg"
+              alt="Lacrosse goalie set in the crease during game action"
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "center 30%" }}
+            />
+          </div>
         </div>
       </section>
 
       {/* Coach intro */}
       <section className="border-b border-line">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-20 lg:px-10 lg:py-32">
-          <PlaceholderImage
-            label="Coach portrait"
-            spec="Square, well-lit, on-field or headshot"
-            className="aspect-square w-full max-w-md"
-          />
+          <div className="relative aspect-square w-full max-w-md overflow-hidden border border-line bg-paper-2">
+            <Image
+              src="/images/jackson-mckeigue-headshot.jpg"
+              alt={`${siteConfig.coach.name} professional headshot`}
+              fill
+              sizes="(min-width: 768px) 448px, 100vw"
+              className="object-cover"
+            />
+          </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
               Meet Your Coach
@@ -86,13 +95,17 @@ export default function Home() {
               Trained by someone who has played the position.
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
-              Legacy Lacrosse Training was built around a simple idea: goalies
-              need dedicated, position-specific coaching, not leftover reps at
-              the end of field practice. Our coach is a four-year NCAA
-              Division III varsity goalie, a graduate of Hanover College, who
-              has spent years refining the technical and mental sides of the
-              position — and now brings that same approach to youth and high
-              school goalies across the Ann Arbor and Metro Detroit area.
+              {siteConfig.coach.name} is a four-year NCAA Division III
+              varsity goalie, a graduate of Hanover College, who has spent
+              years refining the technical and mental sides of the position.
+              He now brings that same approach to youth and high school
+              goalies across the Ann Arbor and Metro Detroit area.
+            </p>
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-ink/65">
+              He&apos;s coached goalies since 2016, led the South Bend Bears
+              high school team to a state championship, and most recently
+              coached goalies at Trine University, ranked #2 nationally in
+              Scoring Defense for the 2025–26 season.
             </p>
             <Button href="/about" variant="outline-dark" className="mt-8">
               More About the Coach
@@ -123,7 +136,7 @@ export default function Home() {
                   {s.name}
                 </h3>
                 <p className="mt-2 text-sm font-medium uppercase tracking-[0.06em] text-ink-muted">
-                  {s.format}
+                  {s.athleteCount} · {s.duration}
                 </p>
                 <p className="mt-4 text-sm leading-relaxed text-ink/65">
                   {s.description}
@@ -149,10 +162,10 @@ export default function Home() {
               Goalkeeping isn&apos;t taught like the rest of the field.
             </h2>
             <p className="mt-6 text-base leading-relaxed text-ink/65">
-              Most practices are built for the other nine players on the
-              field. Goalies get a few extra shots and are expected to figure
-              the rest out. Legacy Lacrosse Training exists to close that
-              gap.
+              Coaching built for field players doesn&apos;t translate to the
+              crease. Goalies need reps, feedback, and drills designed
+              around the position from the start, not borrowed from someone
+              else&apos;s practice plan.
             </p>
           </div>
 
@@ -226,7 +239,7 @@ export default function Home() {
             {siteConfig.location.serviceArea.join(" · ")}
           </p>
           <p className="mx-auto mt-4 max-w-md text-sm text-ink-muted">
-            Don&apos;t see your town? Reach out — travel may be available for
+            Don&apos;t see your town? Reach out. Travel may be available for
             small-group sessions.
           </p>
         </div>
@@ -239,7 +252,7 @@ export default function Home() {
             Ready to raise your game between the pipes?
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-paper/65">
-            Spots are limited by design — every athlete gets real coaching
+            Spots are limited by design. Every athlete gets real coaching
             attention, every session.
           </p>
           <div className="mt-10 flex justify-center">

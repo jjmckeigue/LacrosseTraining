@@ -10,6 +10,9 @@ export const siteConfig = {
   description:
     "Private and small-group lacrosse goalie training for youth and high school athletes in Ann Arbor, Ypsilanti, and Metro Detroit.",
   url: "https://legacylacrossetraining.com",
+  coach: {
+    name: "Jackson McKeigue",
+  },
   location: {
     base: "Ann Arbor, Michigan",
     serviceArea: [
