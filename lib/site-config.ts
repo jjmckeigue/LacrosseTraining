@@ -27,7 +27,7 @@ export const siteConfig = {
     ],
   },
   contact: {
-    email: "info@legacylacrossetraining.com",
+    email: "legacylacrossetraining@gmail.com",
     phone: "",
   },
 } as const;
