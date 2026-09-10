@@ -19,6 +19,9 @@ test("about page loads with expected heading and coach background", async ({
   await expect(
     page.getByRole("link", { name: "Book Training" }).first()
   ).toBeVisible();
+  await expect(
+    page.getByRole("img", { name: `${siteConfig.coach.name} professional headshot` })
+  ).toBeVisible();
 });
 
 test("navigation marks About as the current page", async ({ page }) => {

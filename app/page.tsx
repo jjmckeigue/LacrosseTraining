@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Button from "@/components/ui/Button";
-import PlaceholderImage from "@/components/ui/PlaceholderImage";
 import Testimonials, { type Testimonial } from "@/components/Testimonials";
 import { services } from "@/lib/services";
 import { siteConfig } from "@/lib/site-config";
@@ -61,23 +61,32 @@ export default function Home() {
             </p>
           </div>
 
-          <PlaceholderImage
-            tone="dark"
-            label="Goalie mid-save, game action shot"
-            spec="Portrait or square orientation, high-resolution"
-            className="aspect-[4/5] w-full lg:aspect-[3/4]"
-          />
+          <div className="relative aspect-[2/3] w-full overflow-hidden border border-line-invert bg-ink-2">
+            <Image
+              src="/images/homepage-hero-goalie-game.jpg"
+              alt="Lacrosse goalie set in the crease during game action"
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "center 30%" }}
+            />
+          </div>
         </div>
       </section>
 
       {/* Coach intro */}
       <section className="border-b border-line">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-20 lg:px-10 lg:py-32">
-          <PlaceholderImage
-            label="Coach portrait"
-            spec="Square, well-lit, on-field or headshot"
-            className="aspect-square w-full max-w-md"
-          />
+          <div className="relative aspect-square w-full max-w-md overflow-hidden border border-line bg-paper-2">
+            <Image
+              src="/images/jackson-mckeigue-headshot.jpg"
+              alt={`${siteConfig.coach.name} professional headshot`}
+              fill
+              sizes="(min-width: 768px) 448px, 100vw"
+              className="object-cover"
+            />
+          </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
               Meet Your Coach

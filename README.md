@@ -50,11 +50,12 @@ app/                  App Router routes, layouts, and global styles
   about/page.tsx          About page (coach background, philosophy, CTA)
   globals.css            Tailwind v4 theme (colors, fonts)
 components/            Reusable and page-level components
-  ui/                     Generic UI primitives (Button, PlaceholderImage)
+  ui/                     Generic UI primitives (Button)
 lib/                    Typed, non-visual source-of-truth data
   site-config.ts          Brand copy, nav links, service-area, coach name
   services.ts              Training offerings — single source of truth for
                             the homepage summary and the Training page
+public/images/          Production photography (see below)
 e2e/                    Playwright end-to-end tests
 ```
 
@@ -72,21 +73,25 @@ site, not an enterprise app; prefer boring, managed functionality over
 custom infrastructure unless custom behavior materially improves the
 customer experience or the business.
 
-## Assets needed from the business owner
+## Photography
 
-Pages use labeled placeholder blocks (`components/ui/PlaceholderImage.tsx`)
-wherever real photography is required. Drop finished files into
-`public/images/` and swap the corresponding `PlaceholderImage` for a
-`next/image` call. Needed so far:
+Production photos live in `public/images/`, named semantically (not by
+camera/export filename) and referenced directly via `next/image`:
 
-- Homepage hero — goalie mid-save, game action shot
-- Coach portrait (used on the homepage and the About page hero)
-- Jackson playing goalie at Hanover College (About page)
-- Jackson coaching a goalie on the field (About page)
-- Training page hero — coach running a live session
-- One action photo per training format on the Training page (private,
-  partner, small group)
-- Business phone number (email is set in `lib/site-config.ts`)
+| File                              | Used on              |
+| ---------------------------------- | --------------------- |
+| `homepage-hero-goalie-game.jpg`     | Homepage hero          |
+| `jackson-mckeigue-headshot.jpg`      | Homepage + About hero    |
+| `training-hero-goalie-save.jpg`       | Training hero banner      |
+| `training-save-technique.jpg`          | Training philosophy section |
+| `training-goalie-clearing.jpg`          | Training "complete goalie development" section |
+| `jackson-collegiate-goalie.jpg`          | About playing-background section |
+| `coach-on-field.jpg`                      | About coaching-experience section |
+
+When cropping a new photo with `object-position`, check the crop against the
+source at desktop and mobile widths — a container aspect ratio far from the
+source's native ratio can crop out the subject. Still needed: business phone
+number (email is set in `lib/site-config.ts`).
 
 ## Environment variables
 

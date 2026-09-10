@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
-import PlaceholderImage from "@/components/ui/PlaceholderImage";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -29,23 +29,32 @@ export default function About() {
             </p>
           </div>
 
-          <PlaceholderImage
-            tone="dark"
-            label="Jackson McKeigue, coach portrait"
-            spec="Square, well-lit, on-field or headshot"
-            className="aspect-[4/5] w-full lg:aspect-[3/4]"
-          />
+          <div className="relative aspect-square w-full max-w-md overflow-hidden border border-line-invert bg-ink-2">
+            <Image
+              src="/images/jackson-mckeigue-headshot.jpg"
+              alt={`${siteConfig.coach.name} professional headshot`}
+              fill
+              priority
+              sizes="(min-width: 1024px) 448px, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
       {/* Playing background */}
       <section className="border-b border-line">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-20 lg:px-10 lg:py-32">
-          <PlaceholderImage
-            label="Jackson playing goalie at Hanover College"
-            spec="Landscape or square, action shot preferred"
-            className="aspect-square w-full max-w-md"
-          />
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20 lg:px-10 lg:py-32">
+          <div className="relative aspect-[4/3] w-full overflow-hidden border border-line bg-paper-2">
+            <Image
+              src="/images/jackson-collegiate-goalie.jpg"
+              alt="Collegiate lacrosse goalie making a save near the pipe"
+              fill
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "25% 35%" }}
+            />
+          </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
               Playing Background
@@ -68,39 +77,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Coaching experience */}
-      <section className="border-b border-line bg-paper-2/60">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-20 lg:px-10 lg:py-32">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
-              Coaching Experience
-            </p>
-            <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
-              Coaching goalies since 2016.
-            </h2>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
-              Alongside another coach, I&apos;ve worked with high school and
-              youth goalies since 2016 — from first-time goalies learning
-              the basics to varsity athletes preparing for college
-              recruitment. The last two years, I coached the South Bend
-              Bears high school team to a state championship. Last season, I
-              coached goalies at Trine University, where the team finished
-              the 2025–26 NCAA Division III men&apos;s lacrosse season
-              ranked #2 nationally in Scoring Defense, allowing just 5.63
-              goals per game.
-            </p>
-          </div>
-
-          <PlaceholderImage
-            label="Jackson coaching a goalie on the field"
-            spec="Landscape or square, action shot preferred"
-            className="aspect-square w-full max-w-md"
-          />
-        </div>
-      </section>
-
       {/* Why Legacy exists */}
-      <section className="border-b border-line">
+      <section className="border-b border-line bg-paper-2/60">
         <div className="mx-auto max-w-3xl px-6 py-24 lg:px-10 lg:py-32">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
             Why Legacy Lacrosse Training Exists
@@ -123,7 +101,7 @@ export default function About() {
       </section>
 
       {/* Why goalie-specific coaching matters */}
-      <section className="border-b border-line bg-paper-2/60">
+      <section className="border-b border-line">
         <div className="mx-auto max-w-3xl px-6 py-24 lg:px-10 lg:py-32">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
             Why Goalie-Specific Coaching Matters
@@ -180,6 +158,41 @@ export default function About() {
             keep the group sizes small — private, partner, or small group —
             so every athlete gets real attention, not just volume of shots.
           </p>
+        </div>
+      </section>
+
+      {/* Coaching experience / leadership */}
+      <section className="border-b border-line">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-20 lg:px-10 lg:py-32">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
+              Coaching Experience
+            </p>
+            <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
+              Coaching goalies since 2016.
+            </h2>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
+              Alongside another coach, I&apos;ve worked with high school and
+              youth goalies since 2016 — from first-time goalies learning
+              the basics to varsity athletes preparing for college
+              recruitment. The last two years, I coached the South Bend
+              Bears high school team to a state championship. Last season, I
+              coached goalies at Trine University, where the team finished
+              the 2025–26 NCAA Division III men&apos;s lacrosse season
+              ranked #2 nationally in Scoring Defense, allowing just 5.63
+              goals per game.
+            </p>
+          </div>
+
+          <div className="relative aspect-[3/4] w-full max-w-md overflow-hidden border border-line bg-paper-2">
+            <Image
+              src="/images/coach-on-field.jpg"
+              alt="Coach addressing players on a lacrosse field"
+              fill
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 

@@ -12,6 +12,12 @@ test("homepage renders hero, nav, and primary CTA", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Book Training" }).first()
   ).toBeVisible();
+  await expect(
+    page.getByRole("img", { name: "Lacrosse goalie set in the crease during game action" })
+  ).toBeVisible();
+  await expect(
+    page.getByRole("img", { name: "Jackson McKeigue professional headshot" })
+  ).toBeVisible();
 });
 
 test("mobile menu opens, exposes current nav state, and closes on Escape", async ({

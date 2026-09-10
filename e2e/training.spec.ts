@@ -20,6 +20,11 @@ test("training page loads with expected heading and offerings", async ({
   await expect(
     page.getByRole("link", { name: "Book Training" }).first()
   ).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "Collegiate lacrosse goalie leaping to deflect a shot near the goal",
+    })
+  ).toBeVisible();
 });
 
 test("navigation marks Training as the current page", async ({ page }) => {
