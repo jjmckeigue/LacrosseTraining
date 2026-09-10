@@ -30,6 +30,15 @@ export default function Contact() {
       <section className="border-b border-line">
         <div className="mx-auto max-w-2xl px-6 py-16 lg:px-10 lg:py-20">
           <ContactForm />
+          <p className="mt-8 text-sm text-ink-muted">
+            Prefer email?{" "}
+            <a
+              href={`mailto:${siteConfig.contact.email}`}
+              className="text-ink underline underline-offset-2 hover:text-ink-muted"
+            >
+              {siteConfig.contact.email}
+            </a>
+          </p>
         </div>
       </section>
     </>

@@ -59,6 +59,14 @@ app/                  App Router routes, layouts, and global styles
                                contact submission (the public write boundary
                                for this route)
   privacy/page.tsx           Privacy policy page
+  not-found.tsx               Branded 404 page with links back to Home,
+                               Training, and Book Training
+  sitemap.ts                   Generates /sitemap.xml from a fixed list of
+                                real public routes (no fabricated pages)
+  robots.ts                     Generates /robots.txt, allows crawling,
+                                 points to the sitemap
+  opengraph-image.jpg            Default Open Graph / Twitter card image
+                                  for every route (a real training photo)
   icon.png                 App icon (brand mark), auto-served by Next.js
   favicon.ico               Browser-tab icon; same brand mark as icon.png,
                              baked in at 16/32/48px since some browsers
@@ -73,6 +81,9 @@ components/            Reusable and page-level components
                             accessible pending/success/error states)
 lib/                    Typed, non-visual source-of-truth data
   site-config.ts          Brand copy, nav links, service-area, coach name
+                           (siteConfig.url is the one place the production
+                           domain is set — sitemap, robots, canonical/OG
+                           URLs, and JSON-LD all derive from it)
   services.ts              Training offerings, single source of truth for
                             the homepage summary, Training page, and
                             booking (each offering's Cal.com event slug
@@ -84,6 +95,9 @@ lib/                    Typed, non-visual source-of-truth data
                              the Server Action and its tests
   resend.ts                  Server-only: sends the contact notification
                               email via Resend; never imported by client code
+  organization-schema.ts      JSON-LD Organization data rendered site-wide
+                               in the root layout; see SEO & structured
+                               data below for what it deliberately omits
 public/images/          Production photography (see below)
 public/brand/            Logo family (see Brand assets below)
 e2e/                    Playwright end-to-end tests
@@ -199,6 +213,37 @@ local dev intentionally run without a real key, so `npm run test:e2e` never
 sends a live email — coverage for `/contact` exercises validation and the
 deterministic error path, and delivery itself is verified manually against
 a real Resend configuration.
+
+## SEO & structured data
+
+`/sitemap.xml` and `/robots.txt` (`app/sitemap.ts`, `app/robots.ts`) list
+only the site's real public routes: `/`, `/training`, `/about`, `/book`,
+`/contact`, `/privacy`. No fabricated city or service landing pages are
+generated. Both derive their absolute URLs from `siteConfig.url`, the one
+place the production domain is set, so switching domains later is a
+one-line change.
+
+Per-page `title`/`description` metadata (already set on each route) flows
+automatically into Open Graph and Twitter Card tags via the `openGraph`/
+`twitter` defaults in `app/layout.tsx`; `app/opengraph-image.jpg` is the
+shared social preview image for every route.
+
+`lib/organization-schema.ts` renders a small `Organization` JSON-LD block
+site-wide (name, url, logo, description, email, service area, founder).
+It deliberately omits fields that would require facts the business
+doesn't have, rather than fabricating them:
+
+- **No street address** — training happens at various fields (confirmed
+  after booking), not a fixed storefront.
+- **No phone number** — none is published yet (`siteConfig.contact.phone`
+  is empty).
+- **No `aggregateRating` / `review`** — no reviews exist yet.
+- **No `openingHours`** — availability is Cal.com's live calendar, not a
+  fixed weekly schedule.
+- **No `priceRange`** — pricing isn't finalized/published.
+
+Add any of these only when the underlying fact exists, not to fill out
+the schema. `e2e/seo.spec.ts` asserts the JSON-LD stays free of them.
 
 ## Brand assets
 
