@@ -90,57 +90,55 @@ business. Cal.com (booking) is already integrated; see
 `/book` embeds Cal.com inline; the app never talks to Cal.com's API
 directly and owns no scheduling logic. Cal.com owns availability, conflict
 detection, time zones, booking creation, rescheduling, cancellations,
-limits, and buffers.
+limits, buffers, location, and booking questions.
 
-**Still required from the business owner before this goes live:**
+**Configuration status: complete.** Three independent Cal.com event types
+exist under the `jackson-mckeigue-nhhaaa` account (default in `lib/cal.ts`;
+override with `NEXT_PUBLIC_CAL_USERNAME` if the account ever changes, see
+[Environment variables](#environment-variables)):
 
-1. **Cal.com account**: done. The live account is `jackson-mckeigue-nhhaaa`
-   (default in `lib/cal.ts`; override with `NEXT_PUBLIC_CAL_USERNAME` if it
-   ever changes, see [Environment variables](#environment-variables)).
-2. **Event types**: only one exists today, `lacrosse-training`, and all
-   three offerings in `lib/services.ts` point at it for now (each
-   offering's `calSlug` field). To give each format its own event type
-   (recommended so Cal.com can enforce per-format duration/limits), create
-   two more event types and update `calSlug` for Partner and Small Group
-   to their new slugs; Private can keep using `lacrosse-training` or move
-   to a dedicated slug too, up to you.
-3. **Add booking questions** to each event type (keep it minimal and
-   parent/guardian-first; suggested stable identifiers in parentheses):
-   - Parent/Guardian Name, required (`parent-guardian-name`)
-   - Parent/Guardian Email, required (`parent-guardian-email`)
-   - Phone, optional (`phone`)
-   - Athlete First Name, required (`athlete-first-name`)
-   - Graduation Year, required (`graduation-year`)
-   - School/Club, optional (`school-club`)
-   - Experience Level, optional (`experience-level`)
-   - What would you like to work on?, optional (`session-goals`)
+| Offering (`lib/services.ts` slug) | Cal.com event slug (`calSlug`) | Duration |
+| --- | --- | --- |
+| Private Goalie Training (`private`) | `private-goalie-training` | 60 minutes |
+| Partner Training (`partner`) | `partner-goalie-training` | 75 minutes |
+| Small Group Training (`small-group`) | `small-group-goalie-training` | 90 minutes |
 
-   Don't collect a home address, full date of birth, medical information,
-   or other information the business doesn't operationally need.
-4. **Decide the Partner/Small Group capacity model** and configure Cal.com
-   to match; the app makes no assumption either way:
-   - **Closed group** (default-friendly): one parent books the whole slot
-     and supplies the group's info. No Cal.com "seats" needed.
-   - **Open enrollment**: separate families independently book seats in
-     the same slot. Enable Cal.com's seats feature on the Partner and
-     Small Group event types and set the seat count there.
+Each offering's `duration` in `lib/services.ts` is the exact session length
+and the single source of truth for that value on the site; don't re-type a
+duration anywhere else. Cal.com's own event-type duration is the source of
+truth for actual scheduling and should be kept in sync with the table above
+if it ever changes there first.
 
-   Private Goalie Training should always stay a single booking/athlete
-   slot regardless of which model is chosen for the other two.
-5. **Confirm scheduling settings** in Cal.com (not in this app): the live
-   event currently shows `America/New York`, functionally the same UTC
-   offset as `America/Detroit` but worth explicitly setting the latter (or
-   whichever is correct) rather than leaving it as a default. Also confirm:
-   a connected conflict calendar, real evening/weekend availability, a
-   sensible booking horizon, minimum notice, before/after session buffers,
-   and a rescheduling/cancellation policy.
-6. **Location**: the booking page currently reads "Ann Arbor / Southeast
-   Michigan, confirmed after booking" rather than a residential address.
-   Once a real recurring location exists, move it into each event type's
-   Cal.com location field instead of (or in addition to) this page copy.
+All three event types use the `America/Detroit` time zone, closed-group
+booking (Cal.com's seats feature is off, so one parent books the whole
+Partner/Small Group slot and supplies the group's info), and the booking
+questions below. Cal.com remains the source of truth for all of it:
+availability, conflict detection, buffers, minimum notice, booking horizon,
+cancellation/rescheduling policy, and location.
 
-Verified live in a real browser against the real account: the calendar,
-available dates, and time slots all render correctly with no console
+**Booking questions**, configured per event type (keep it minimal and
+parent/guardian-first; stable identifiers in parentheses):
+- Parent/Guardian Name, required (`parent-guardian-name`)
+- Parent/Guardian Email, required (`parent-guardian-email`)
+- Phone, optional (`phone`)
+- Athlete First Name, required (`athlete-first-name`)
+- Graduation Year, required (`graduation-year`)
+- School/Club, optional (`school-club`)
+- Experience Level, optional (`experience-level`)
+- Training goals, optional (`session-goals`)
+
+No home address, full date of birth, medical information, or other
+information the business doesn't operationally need is collected.
+
+**Still open**: a real recurring training location (the booking page
+currently reads "Ann Arbor / Southeast Michigan, confirmed after booking"
+rather than a residential address; once a real location exists, set it in
+each event type's Cal.com location field), and switching Partner/Small
+Group to open enrollment later, if ever decided, which is a Cal.com
+configuration change, not a code change.
+
+Verified live in a real browser against all three real events: the
+calendar, available dates, and time slots render correctly with no console
 errors, in both the `month_view` desktop layout and the
 `useSlotsViewOnSmallScreen` mobile layout. `npm run test:e2e` still only
 checks this app's own state (selector, URL handling, summary text) and
@@ -181,12 +179,12 @@ camera/export filename) and referenced directly via `next/image`:
 | File                              | Used on              |
 | ---------------------------------- | --------------------- |
 | `homepage-hero-goalie-game.jpg`     | Homepage hero          |
-| `jackson-mckeigue-headshot.jpg`      | Homepage + About hero    |
+| `jackson-mckeigue-headshot.jpg`      | Homepage "Meet Your Coach" + About Coaching Experience section |
 | `training-hero-goalie-save.jpg`       | Training hero banner      |
 | `training-save-technique.jpg`          | Training philosophy section |
 | `training-goalie-clearing.jpg`          | Training "complete goalie development" section |
 | `jackson-collegiate-goalie.jpg`          | About playing-background section |
-| `coach-on-field.jpg`                      | About coaching-experience section |
+| `coach-on-field.jpg`                      | About hero |
 
 When cropping a new photo with `object-position`, check the crop against the
 source at desktop and mobile widths — a container aspect ratio far from the
