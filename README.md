@@ -60,6 +60,10 @@ app/                  App Router routes, layouts, and global styles
                                for this route)
   privacy/page.tsx           Privacy policy page
   icon.png                 App icon (brand mark), auto-served by Next.js
+  favicon.ico               Browser-tab icon; same brand mark as icon.png,
+                             baked in at 16/32/48px since some browsers
+                             request /favicon.ico directly regardless of
+                             the generated <link rel="icon"> tag
   globals.css               Tailwind v4 theme (colors, fonts)
 components/            Reusable and page-level components
   ui/                     Generic UI primitives (Button)
@@ -207,7 +211,7 @@ file that isn't part of the delivered asset set):
 | `logo-horizontal-on-dark.png`       | Header wordmark (site header is always on `bg-ink`) |
 | `logo-horizontal-on-light.png`       | Wordmark for paper/light surfaces, not currently used in the UI |
 | `logo-mark-on-dark.png`               | Emblem only, for dark surfaces |
-| `logo-mark-on-light.png`               | Emblem only, for light surfaces; also the source for `app/icon.png` (favicon/app icon) |
+| `logo-mark-on-light.png`               | Emblem only, for light surfaces; also the source for `app/icon.png` and `app/favicon.ico` (browser-tab icon) |
 
 The canonical brand blue is `#0b486d`, available as the `--color-brand-blue`
 token in `app/globals.css`. It's the logo's own color, not a replacement
