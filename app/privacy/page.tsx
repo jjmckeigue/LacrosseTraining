@@ -58,8 +58,11 @@ export default function Privacy() {
           This site is hosted on Vercel, which, like most hosting providers,
           automatically logs standard technical information (such as IP
           address and browser type) for security and operational purposes.
-          This website does not use advertising trackers or analytics
-          cookies.
+          It also uses Vercel Web Analytics to see aggregate traffic
+          patterns, such as which pages are visited and roughly how many
+          visitors the site gets. This is cookieless and does not track you
+          individually across sites. This website does not use advertising
+          trackers.
         </p>
 
         <h2 className="mt-12 font-display text-2xl tracking-tight text-ink">
@@ -97,7 +100,7 @@ export default function Privacy() {
           </li>
           <li>
             <span className="font-semibold text-ink">Vercel</span>, for
-            hosting this website.
+            hosting this website and providing cookieless traffic analytics.
           </li>
         </ul>
 

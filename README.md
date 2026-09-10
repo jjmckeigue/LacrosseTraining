@@ -14,7 +14,8 @@ serving Ann Arbor, Ypsilanti, and Metro Detroit.
 - [Resend](https://resend.com) for transactional email — sends one
   notification to Legacy when the `/contact` form is submitted; see
   [Contact form (Resend) setup](#contact-form-resend-setup)
-- [Vercel](https://vercel.com) for deployment
+- [Vercel](https://vercel.com) for deployment and cookieless web analytics
+  (`@vercel/analytics`, mounted once in `app/layout.tsx`)
 - [Playwright](https://playwright.dev) for end-to-end testing
 
 Supabase, Stripe, and a custom database are intentionally **not** part of the
