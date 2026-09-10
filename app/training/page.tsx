@@ -6,7 +6,7 @@ import { services } from "@/lib/services";
 export const metadata: Metadata = {
   title: "Lacrosse Goalie Training in Ann Arbor & Metro Detroit",
   description:
-    "Private, partner, and small-group lacrosse goalie training for youth and high school athletes across Ann Arbor, Ypsilanti, and Metro Detroit — footwork, hand speed, angles, and game-speed decision-making.",
+    "Private, partner, and small-group lacrosse goalie training for youth and high school athletes across Ann Arbor, Ypsilanti, and Metro Detroit: footwork, hand speed, angles, and game-speed decision-making.",
 };
 
 const focusAreas = [...new Set(services.flatMap((s) => s.focusAreas))];
@@ -25,7 +25,7 @@ export default function Training() {
           </h1>
           <p className="mt-6 max-w-lg text-base leading-relaxed text-paper/70">
             Every format below is built around the same goalie-specific
-            curriculum — the difference is group size, pace, and cost. Find
+            curriculum. The difference is group size, pace, and cost. Find
             the format that fits, then book a session.
           </p>
           <div className="mt-10">
@@ -38,7 +38,7 @@ export default function Training() {
 
       {/* Hero image */}
       <section className="border-b border-line bg-ink">
-        <div className="relative aspect-[3/2] w-full sm:aspect-[2/1]">
+        <div className="relative aspect-[2/1] w-full lg:aspect-[3/1]">
           <Image
             src="/images/training-hero-goalie-save.jpg"
             alt="Collegiate lacrosse goalie leaping to deflect a shot near the goal"
@@ -46,7 +46,7 @@ export default function Training() {
             priority
             sizes="100vw"
             className="object-cover"
-            style={{ objectPosition: "center 45%" }}
+            style={{ objectPosition: "center 55%" }}
           />
         </div>
       </section>
@@ -63,13 +63,13 @@ export default function Training() {
             </h2>
             <p className="mt-6 text-base leading-relaxed text-ink/65">
               A goalie&apos;s job has almost nothing in common with the
-              other nine positions on the field — the footwork is
-              different, the hand mechanics are different, and the
-              decisions happen in a fraction of a second. Every session
-              here is built specifically around the crease: angles and
-              positioning, hand speed and save technique, rebound control,
-              clearing, and the reads that turn a good goalie into a great
-              one. Nothing borrowed from a general practice plan.
+              other nine players on the field. The footwork is different,
+              the hand mechanics are different, and the decisions happen in
+              a fraction of a second. Every session here is built
+              specifically around the crease: angles and positioning, hand
+              speed and save technique, rebound control, clearing, and the
+              reads that turn a good goalie into a great one. Nothing
+              borrowed from a general practice plan.
             </p>
             <p className="mt-6 text-base leading-relaxed text-ink/65">
               The three formats below deliver that same curriculum at
@@ -178,7 +178,7 @@ export default function Training() {
               stat line: controlling the rebound, staying composed with
               traffic in front of the net, communicating with the defense,
               and clearing the ball to start the transition the other way.
-              A goalie who only stops shots is half-developed — we train
+              A goalie who only stops shots is half-developed. We train
               the whole position.
             </p>
           </div>
@@ -246,8 +246,8 @@ export default function Training() {
             Pick a format and get on the schedule.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-paper/65">
-            Spots are limited by design — every athlete gets real coaching
-            attention, every session.
+            Every format above is capped on purpose, so training stays about
+            coaching attention, not just adding reps.
           </p>
           <div className="mt-10 flex justify-center">
             <Button href="/book" variant="primary">

@@ -22,20 +22,19 @@ export default function About() {
               {siteConfig.coach.name}
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-paper/70">
-              Founder of Legacy Lacrosse Training — a four-year NCAA
-              Division III varsity goalie, Hanover College, now coaching
-              the next generation of goalies across Ann Arbor and Metro
-              Detroit.
+              Founder of Legacy Lacrosse Training: a four-year NCAA Division
+              III varsity goalie, Hanover College, now coaching the next
+              generation of goalies across Ann Arbor and Metro Detroit.
             </p>
           </div>
 
-          <div className="relative aspect-square w-full max-w-md overflow-hidden border border-line-invert bg-ink-2">
+          <div className="relative aspect-[3/4] w-full overflow-hidden border border-line-invert bg-ink-2">
             <Image
-              src="/images/jackson-mckeigue-headshot.jpg"
-              alt={`${siteConfig.coach.name} professional headshot`}
+              src="/images/coach-on-field.jpg"
+              alt="Coach addressing players on a lacrosse field"
               fill
               priority
-              sizes="(min-width: 1024px) 448px, 100vw"
+              sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
           </div>
@@ -66,7 +65,7 @@ export default function About() {
               I played goalie for four years at the NCAA Division III level
               at Hanover College. Like most goalies, I ended up at the
               position because nobody else wanted to stand in front of a
-              hard rubber ball — and I stayed because I fell in love with
+              hard rubber ball, and I stayed because I fell in love with
               everything about it: the angles, the footwork, the
               split-second reads, the pressure of being the last line of
               defense. Four years of college reps taught me things about
@@ -90,7 +89,7 @@ export default function About() {
             Most youth and high school practices are built for the other
             nine guys on the field. The goalie gets handed a bucket of balls
             at the end of practice and told to have fun. That&apos;s not
-            coaching — it&apos;s just shots. Legacy Lacrosse Training exists
+            coaching, it&apos;s just shots. Legacy Lacrosse Training exists
             because I remember being that goalie, figuring things out on my
             own with no one around who actually understood the position. I
             started this to give athletes what I didn&apos;t have:
@@ -131,8 +130,8 @@ export default function About() {
             Technical detail. Honest feedback. No wasted reps.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-paper/70">
-            Every session is built around fundamentals — footwork, hands,
-            angles — because those are what hold up when a game gets fast
+            Every session is built around fundamentals: footwork, hands, and
+            angles, because those are what hold up when a game gets fast
             and chaotic. I&apos;ll tell you directly what&apos;s working
             and what isn&apos;t; athletes improve faster when they&apos;re
             not guessing where they stand. And every rep has a purpose: no
@@ -155,7 +154,7 @@ export default function About() {
             Expect a warm-up built around footwork and hand speed, focused
             technical work on whatever we&apos;re correcting that week, and
             game-speed reps that build toward the pace of a real game. I
-            keep the group sizes small — private, partner, or small group —
+            keep the group sizes small (private, partner, or small group),
             so every athlete gets real attention, not just volume of shots.
           </p>
         </div>
@@ -173,7 +172,7 @@ export default function About() {
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
               Alongside another coach, I&apos;ve worked with high school and
-              youth goalies since 2016 — from first-time goalies learning
+              youth goalies since 2016, from first-time goalies learning
               the basics to varsity athletes preparing for college
               recruitment. The last two years, I coached the South Bend
               Bears high school team to a state championship. Last season, I
@@ -184,12 +183,12 @@ export default function About() {
             </p>
           </div>
 
-          <div className="relative aspect-[3/4] w-full max-w-md overflow-hidden border border-line bg-paper-2">
+          <div className="relative aspect-square w-full max-w-md overflow-hidden border border-line bg-paper-2">
             <Image
-              src="/images/coach-on-field.jpg"
-              alt="Coach addressing players on a lacrosse field"
+              src="/images/jackson-mckeigue-headshot.jpg"
+              alt={`${siteConfig.coach.name} professional headshot`}
               fill
-              sizes="(min-width: 1024px) 40vw, 100vw"
+              sizes="(min-width: 1024px) 448px, 100vw"
               className="object-cover"
             />
           </div>
@@ -203,8 +202,8 @@ export default function About() {
             Ready to work with me directly?
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-paper/65">
-            Spots are limited by design — every athlete gets real coaching
-            attention, every session.
+            I only take on so many athletes at a time, so every session
+            gets my full attention.
           </p>
           <div className="mt-10 flex justify-center">
             <Button href="/book" variant="primary">

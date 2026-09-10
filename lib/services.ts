@@ -22,7 +22,7 @@ export const services: ServiceOffering[] = [
     athleteCount: "1 athlete",
     duration: "~60 minutes",
     description:
-      "Fully personalized reps built around the athlete's specific footwork, hands, and habits — with detail no group setting can offer.",
+      "Fully personalized reps built around the athlete's specific footwork, hands, and habits, with detail no group setting can offer.",
     bestFor:
       "Goalies who want maximum one-on-one attention and faster correction of specific technical habits.",
     focusAreas: [

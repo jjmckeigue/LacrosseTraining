@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 const testimonials: Testimonial[] = [];
 
 const differentiators = [
-  "Position-specific instruction every session — not general stick-skill drills built for the rest of the field.",
+  "Position-specific instruction every session, not general stick-skill drills built for the rest of the field.",
   "Small athlete-to-coach ratios, always.",
   "Game-speed shot volume from realistic angles and release points.",
   "College-level technical detail on footwork, hands, and angles.",
@@ -43,7 +43,7 @@ export default function Home() {
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-paper/70">
               Private and small-group training for youth and high school
-              goalies across Ann Arbor, Ypsilanti, and Metro Detroit — built
+              goalies across Ann Arbor, Ypsilanti, and Metro Detroit, built
               around footwork, hand speed, angles, and the decision-making
               that separates good goalies from great ones.
             </p>
@@ -95,14 +95,11 @@ export default function Home() {
               Trained by someone who has played the position.
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink/65">
-              Legacy Lacrosse Training was built around a simple idea: goalies
-              need dedicated, position-specific coaching, not leftover reps at
-              the end of field practice. {siteConfig.coach.name} is a
-              four-year NCAA Division III varsity goalie, a graduate of
-              Hanover College, who has spent years refining the technical
-              and mental sides of the position — and now brings that same
-              approach to youth and high school goalies across the Ann Arbor
-              and Metro Detroit area.
+              {siteConfig.coach.name} is a four-year NCAA Division III
+              varsity goalie, a graduate of Hanover College, who has spent
+              years refining the technical and mental sides of the position.
+              He now brings that same approach to youth and high school
+              goalies across the Ann Arbor and Metro Detroit area.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-ink/65">
               He&apos;s coached goalies since 2016, led the South Bend Bears
@@ -165,10 +162,10 @@ export default function Home() {
               Goalkeeping isn&apos;t taught like the rest of the field.
             </h2>
             <p className="mt-6 text-base leading-relaxed text-ink/65">
-              Most practices are built for the other nine players on the
-              field. Goalies get a few extra shots and are expected to figure
-              the rest out. Legacy Lacrosse Training exists to close that
-              gap.
+              Coaching built for field players doesn&apos;t translate to the
+              crease. Goalies need reps, feedback, and drills designed
+              around the position from the start, not borrowed from someone
+              else&apos;s practice plan.
             </p>
           </div>
 
@@ -242,7 +239,7 @@ export default function Home() {
             {siteConfig.location.serviceArea.join(" · ")}
           </p>
           <p className="mx-auto mt-4 max-w-md text-sm text-ink-muted">
-            Don&apos;t see your town? Reach out — travel may be available for
+            Don&apos;t see your town? Reach out. Travel may be available for
             small-group sessions.
           </p>
         </div>
@@ -255,7 +252,7 @@ export default function Home() {
             Ready to raise your game between the pipes?
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-paper/65">
-            Spots are limited by design — every athlete gets real coaching
+            Spots are limited by design. Every athlete gets real coaching
             attention, every session.
           </p>
           <div className="mt-10 flex justify-center">
