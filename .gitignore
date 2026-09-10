@@ -40,10 +40,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-# local editor/tooling config (not needed in version control)
-.claude/
-AGENTS.md
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts

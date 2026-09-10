@@ -11,7 +11,9 @@ serving Ann Arbor, Ypsilanti, and Metro Detroit.
   custom-built) at `/book`. Cal.com owns scheduling entirely; see
   [Booking (Cal.com) setup](#booking-calcom-setup) for the account
   configuration still required before it's live.
-- [Resend](https://resend.com) for transactional email (planned)
+- [Resend](https://resend.com) for transactional email — sends one
+  notification to Legacy when the `/contact` form is submitted; see
+  [Contact form (Resend) setup](#contact-form-resend-setup)
 - [Vercel](https://vercel.com) for deployment
 - [Playwright](https://playwright.dev) for end-to-end testing
 
@@ -51,12 +53,19 @@ app/                  App Router routes, layouts, and global styles
   training/page.tsx      Training page (formats, philosophy, CTA)
   about/page.tsx          About page (coach background, philosophy, CTA)
   book/page.tsx            Booking page: service selector + Cal.com embed
+  contact/page.tsx          Contact page: form + business context
+  contact/actions.ts          Server Action: validates and emails a
+                               contact submission (the public write boundary
+                               for this route)
+  privacy/page.tsx           Privacy policy page
   icon.png                 App icon (brand mark), auto-served by Next.js
   globals.css               Tailwind v4 theme (colors, fonts)
 components/            Reusable and page-level components
   ui/                     Generic UI primitives (Button)
   booking/                 ServiceSelector (server) + CalBookingEmbed
                             (client boundary for the Cal.com widget)
+  contact/                 ContactForm (client boundary: controlled fields,
+                            accessible pending/success/error states)
 lib/                    Typed, non-visual source-of-truth data
   site-config.ts          Brand copy, nav links, service-area, coach name
   services.ts              Training offerings, single source of truth for
@@ -65,6 +74,11 @@ lib/                    Typed, non-visual source-of-truth data
                             lives here as `calSlug`)
   cal.ts                    Builds a Cal.com booking link from a service;
                              the one place that knows the Cal.com username
+  contact.ts                Contact form shape, topic allowlist, and the
+                             authoritative server-side validation, shared by
+                             the Server Action and its tests
+  resend.ts                  Server-only: sends the contact notification
+                              email via Resend; never imported by client code
 public/images/          Production photography (see below)
 public/brand/            Logo family (see Brand assets below)
 e2e/                    Playwright end-to-end tests
@@ -77,13 +91,15 @@ real duplication to justify them.
 
 ## Future integrations
 
-Add Supabase, Stripe, Resend, a Contact page, or a contact form only when a
-concrete feature needs them, e.g. a lead CRM, session history, or payment
-records. This is a small coaching business site, not an enterprise app;
-prefer boring, managed functionality over custom infrastructure unless
-custom behavior materially improves the customer experience or the
-business. Cal.com (booking) is already integrated; see
-[Booking (Cal.com) setup](#booking-calcom-setup) for what's still required.
+Add Supabase, Stripe, authentication, or a database only when a concrete
+feature needs them, e.g. a lead CRM, session history, or payment records.
+This is a small coaching business site, not an enterprise app; prefer
+boring, managed functionality over custom infrastructure unless custom
+behavior materially improves the customer experience or the business.
+Cal.com (booking) and Resend (contact notifications) are already
+integrated; see [Booking (Cal.com) setup](#booking-calcom-setup) and
+[Contact form (Resend) setup](#contact-form-resend-setup) for what's still
+required.
 
 ## Booking (Cal.com) setup
 
@@ -152,6 +168,33 @@ for this account. An earlier version that omitted the namespace threw an
 "iframe doesn't exist" error from inside `@calcom/embed-react` itself;
 namespacing resolved it.
 
+## Contact form (Resend) setup
+
+`/contact` is a minimal form (name, email, phone, topic, message) submitted
+through a Next.js Server Action (`app/contact/actions.ts`), not a generic
+API route. That action is a public security boundary: `lib/contact.ts`
+re-validates everything server-side (required fields, email format, topic
+against a fixed allowlist, max lengths) regardless of what client-side
+`required`/`maxLength` attributes already enforce, and a hidden honeypot
+field silently short-circuits to a fake success response for basic bots
+without sending an email.
+
+A valid submission sends exactly one plain-text notification email to
+Legacy via Resend (`lib/resend.ts`, server-only — never imported by a
+Client Component). The sender and recipient are fixed by configuration;
+visitor input can only set the reply-to address, never `from`/`to`. There
+is no database: submissions are not persisted anywhere, and only the error
+message (never form content) is logged on failure. No automated
+acknowledgement email is sent back to the visitor in this phase.
+
+Requires `RESEND_API_KEY` (see [Environment variables](#environment-variables))
+in any environment that should actually deliver email; without it, the form
+correctly renders its accessible error state instead of crashing. CI and
+local dev intentionally run without a real key, so `npm run test:e2e` never
+sends a live email — coverage for `/contact` exercises validation and the
+deterministic error path, and delivery itself is verified manually against
+a real Resend configuration.
+
 ## Brand assets
 
 The logo family lives in `public/brand/`, sourced from finished exports
@@ -196,8 +239,9 @@ number (email is set in `lib/site-config.ts`).
 | Variable                   | Required | Purpose                                                        |
 | --------------------------- | -------- | ---------------------------------------------------------------- |
 | `NEXT_PUBLIC_CAL_USERNAME`   | No | Cal.com username/team slug; see [Booking (Cal.com) setup](#booking-calcom-setup). Defaults to the real account (`jackson-mckeigue-nhhaaa`) in `lib/cal.ts`; only set this if the account changes. |
-
-When further integrations (Resend, etc.) are added:
+| `RESEND_API_KEY`             | Yes, to actually send contact emails | Server-only Resend API key; never prefix with `NEXT_PUBLIC_`. Without it, `/contact` still works but renders its error state instead of delivering mail. |
+| `RESEND_FROM_EMAIL`          | No | Fixed `from` address for contact notifications. Defaults to a Resend sandbox address in `lib/resend.ts`; set once a sending domain is verified in Resend. |
+| `CONTACT_TO_EMAIL`           | No | Fixed recipient for contact notifications. Defaults to the email in `lib/site-config.ts`. |
 
 - Keep secrets in an untracked `.env.local` (the `.gitignore` already
   excludes `.env*`).
@@ -210,4 +254,15 @@ When further integrations (Resend, etc.) are added:
 
 Deployed on Vercel. Pushes to `main` and pull requests run CI
 (`.github/workflows/ci.yml`): install, lint, typecheck, production build,
-and the Playwright e2e suite. Vercel builds and deploys `main` on merge.
+and the Playwright e2e suite. The workflow is scoped to read-only
+repository permissions (`permissions: contents: read`). Vercel builds and
+deploys `main` on merge.
+
+Baseline response security headers (`X-Content-Type-Options`,
+`Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`) are set for
+every route in `next.config.ts`. There is intentionally no Content-Security-
+Policy yet: the `/book` route embeds Cal.com in an iframe, and a CSP added
+without first inventorying and testing Cal.com's actual requirements (in a
+Report-Only pass, verified against real `/book` traffic on desktop and
+mobile) risks silently breaking booking. Add one only after that process,
+not as a default hardening step.
