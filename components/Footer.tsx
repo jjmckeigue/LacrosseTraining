@@ -58,7 +58,12 @@ export default function Footer() {
           <p>
             &copy; {year} {siteConfig.name}. All rights reserved.
           </p>
-          <p>Based in {siteConfig.location.base}.</p>
+          <div className="flex items-center gap-6">
+            <p>Based in {siteConfig.location.base}.</p>
+            <Link href="/privacy" className="hover:text-paper">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
