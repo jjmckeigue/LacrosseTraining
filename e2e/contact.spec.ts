@@ -1,4 +1,17 @@
 import { expect, test } from "@playwright/test";
+import { siteConfig } from "../lib/site-config";
+
+test("contact page offers a direct mailto fallback", async ({ page }) => {
+  await page.goto("/contact");
+
+  // The footer also has a mailto link with the same address, so scope to
+  // the page's own main content.
+  const link = page
+    .getByRole("main")
+    .getByRole("link", { name: siteConfig.contact.email });
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute("href", `mailto:${siteConfig.contact.email}`);
+});
 
 test("contact page loads with expected heading and form fields", async ({
   page,
