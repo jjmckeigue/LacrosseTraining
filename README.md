@@ -14,8 +14,13 @@ serving Ann Arbor, Ypsilanti, and Metro Detroit.
 - [Resend](https://resend.com) for transactional email — sends one
   notification to Legacy when the `/contact` form is submitted; see
   [Contact form (Resend) setup](#contact-form-resend-setup)
-- [Vercel](https://vercel.com) for deployment and cookieless web analytics
-  (`@vercel/analytics`, mounted once in `app/layout.tsx`)
+- [Vercel](https://vercel.com) for deployment, cookieless web analytics
+  (`@vercel/analytics`, mounted once in `app/layout.tsx`), and edge
+  security (DDoS mitigation, WAF, bot/rate-limit protection at the
+  platform level); [Vercel BotID](https://vercel.com/docs/botid)
+  additionally protects `POST /contact` — see
+  [Security](#security) and
+  [Contact form (Resend) setup](#contact-form-resend-setup)
 - [Playwright](https://playwright.dev) for end-to-end testing
 
 Supabase, Stripe, and a custom database are intentionally **not** part of the
@@ -48,6 +53,9 @@ as you edit `app/page.tsx`.
 ## Project structure
 
 ```
+instrumentation-client.ts  Declares the one BotID-protected path
+                            (POST /contact) for the client-side challenge;
+                            see Security below
 app/                  App Router routes, layouts, and global styles
   layout.tsx           Root layout: fonts, metadata, skip link, Header/Footer
   page.tsx              Homepage
@@ -198,6 +206,20 @@ against a fixed allowlist, max lengths) regardless of what client-side
 field silently short-circuits to a fake success response for basic bots
 without sending an email.
 
+[Vercel BotID](https://vercel.com/docs/botid) adds a second, invisible
+layer on top of the honeypot, scoped to only `POST /contact`:
+`instrumentation-client.ts` declares the protected path with `initBotId`,
+`next.config.ts` is wrapped with `withBotId` for the client-side challenge
+plumbing, and the Server Action calls `checkBotId()` before validation. A
+positive detection returns the exact same generic success response as the
+honeypot — no email sent, no signal to an automated client about which
+layer caught it. If the BotID check itself fails (a transient provider
+problem), the action fails open and continues to validation rather than
+crashing the page or blocking a real visitor; server-side validation and
+the fixed Resend sender/recipient are unaffected either way. No BotID
+payloads, headers, or visitor identifiers are ever logged. BotID Basic
+(not the paid Deep Analysis tier) is what's configured here.
+
 A valid submission sends exactly one plain-text notification email to
 Legacy via Resend (`lib/resend.ts`, server-only — never imported by a
 Client Component). The sender and recipient are fixed by configuration;
@@ -316,3 +338,32 @@ without first inventorying and testing Cal.com's actual requirements (in a
 Report-Only pass, verified against real `/book` traffic on desktop and
 mobile) risks silently breaking booking. Add one only after that process,
 not as a default hardening step.
+
+## Security
+
+Security is deliberately layered by who's actually positioned to handle
+each concern, rather than duplicated in the application:
+
+- **Vercel (edge)** owns DDoS mitigation, the Web Application Firewall,
+  IP-based rate limiting, scanner-path rules, and general malicious-client
+  detection for the whole site. These are configured in the Vercel
+  dashboard (Firewall tab), not in this repository — that's the right
+  place for rules that need to react to live traffic patterns without a
+  code deploy.
+- **BotID (`botid` package)** adds one focused, invisible check on top of
+  that: `POST /contact`, the site's only application-level abuse surface
+  (a public form that triggers an outbound email). See
+  [Contact form (Resend) setup](#contact-form-resend-setup) for how it's
+  wired in. It is not applied to ordinary page GETs or to `/book`, which
+  only embeds Cal.com's own iframe and isn't a route this app processes
+  submissions through.
+- **Server-side validation and the honeypot on `/contact`** remain in
+  place as defense-in-depth regardless of BotID's verdict: authoritative
+  field validation always runs, the fixed Resend sender/recipient are
+  never influenced by visitor input, and a BotID outage fails open (the
+  submission is still validated and sent) rather than blocking a real
+  visitor or crashing the page.
+
+This repo does not implement a custom IP blocklist, rate limiter, or CSP —
+those either belong at the Vercel edge (already covered above) or need the
+Cal.com CSP inventory described just above before they're safe to add.

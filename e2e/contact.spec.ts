@@ -51,6 +51,30 @@ test("honeypot field exists but is unreachable and hidden from assistive tech", 
   ).toHaveCount(0);
 });
 
+test("a submission with the honeypot filled returns the same generic success and sends nothing", async ({
+  page,
+}) => {
+  await page.goto("/contact");
+  const form = page.locator("form");
+
+  await page.getByLabel("Name").fill("Bot Name");
+  await page.getByLabel("Email").fill("bot@example.com");
+  await page.getByLabel("Message").fill("This is an automated submission.");
+  // Not reachable by a real visitor (hidden + unfocusable), but a script
+  // filling every field on the form would hit it.
+  await page.locator("#website").fill("http://spam.example");
+
+  await page.getByRole("button", { name: "Send Message" }).click();
+
+  // Same generic success message a real send would produce — an automated
+  // client learns nothing about which layer (honeypot or BotID) caught it,
+  // and this must not be the delivery-error path, which would mean the
+  // honeypot check didn't short-circuit before Resend was ever attempted.
+  const status = form.getByRole("status");
+  await expect(status).toBeVisible();
+  await expect(status).toContainText("Thanks for reaching out");
+});
+
 test("submitting with required fields empty does not send the form", async ({
   page,
 }) => {
