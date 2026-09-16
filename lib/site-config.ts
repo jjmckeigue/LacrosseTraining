@@ -8,7 +8,7 @@ export const siteConfig = {
   shortName: "Legacy",
   tagline: "Personalized Goalie Development",
   description:
-    "Private and small-group lacrosse goalie training for youth and high school athletes in Ann Arbor, Ypsilanti, and Metro Detroit.",
+    "Private and small-group lacrosse goalie training for girls' and boys' goalies from youth through high school, plus women's and men's college goalies, across Ann Arbor and Metro Detroit.",
   url: "https://legacylacrossetraining.com",
   coach: {
     name: "Jackson McKeigue",

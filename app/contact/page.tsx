@@ -24,6 +24,10 @@ export default function Contact() {
             directly. To schedule a training session, use Book Training
             instead.
           </p>
+          <p className="mt-4 max-w-lg text-sm text-paper-muted">
+            Not sure which format fits your goalie or program? Reach out and
+            we&apos;ll figure out the right starting point.
+          </p>
         </div>
       </section>
 

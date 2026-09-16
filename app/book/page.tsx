@@ -33,6 +33,11 @@ export default async function Book(props: PageProps<"/book">) {
             Pick the format that fits, then schedule a session below. Every
             session is coached personally by {siteConfig.coach.name}.
           </p>
+          <p className="mt-4 max-w-lg text-sm text-paper-muted">
+            Training is available for girls&apos; and boys&apos; youth and
+            high school goalies, as well as women&apos;s and men&apos;s
+            college goalies.
+          </p>
         </div>
       </section>
 

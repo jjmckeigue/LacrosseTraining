@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: `About ${siteConfig.coach.name}`,
-  description: `${siteConfig.coach.name}, a four-year NCAA Division III goalie, founded ${siteConfig.name} and coaches youth and high school goalies across Ann Arbor and Metro Detroit.`,
+  description: `${siteConfig.coach.name}, a four-year NCAA Division III goalie, founded ${siteConfig.name} and coaches goalies from youth through college across Ann Arbor and Metro Detroit.`,
 };
 
 export default function About() {
@@ -86,15 +86,21 @@ export default function About() {
             Goalies get an afterthought. I wanted to fix that.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-ink/65">
-            Most youth and high school practices are built for the other
-            nine guys on the field. The goalie gets handed a bucket of balls
-            at the end of practice and told to have fun. That&apos;s not
-            coaching, it&apos;s just shots. Legacy Lacrosse Training exists
-            because I remember being that goalie, figuring things out on my
-            own with no one around who actually understood the position. I
-            started this to give athletes what I didn&apos;t have:
-            dedicated, position-specific coaching from someone who has
-            actually played in the crease.
+            Most youth and high school practices are built around the field
+            players. The goalie gets handed a bucket of balls at the end of
+            practice and told to have fun. That&apos;s not coaching,
+            it&apos;s just shots. Legacy Lacrosse Training exists because I
+            remember being that goalie, figuring things out on my own with
+            no one around who actually understood the position. I started
+            this to give athletes what I didn&apos;t have: dedicated,
+            position-specific coaching from someone who has actually played
+            in the crease.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-ink/65">
+            That need exists across the sport. Legacy is built for
+            girls&apos; and boys&apos; goalies alike, from athletes learning
+            the position for the first time through college players
+            continuing to refine it.
           </p>
         </div>
       </section>
@@ -137,6 +143,13 @@ export default function About() {
             not guessing where they stand. And every rep has a purpose: no
             standing around, no generic drills borrowed from a field-player
             practice plan. If we&apos;re on the clock, we&apos;re working.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-paper/70">
+            Those same principles, footwork, positioning, tracking, hands,
+            communication, clearing, composure, apply at every level. What
+            changes is the pace, the terminology, and how much detail we go
+            into at once, adapted to the athlete&apos;s experience and game
+            context.
           </p>
         </div>
       </section>

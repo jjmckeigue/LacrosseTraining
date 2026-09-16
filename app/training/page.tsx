@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Button from "@/components/ui/Button";
 import { services } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Lacrosse Goalie Training in Ann Arbor & Metro Detroit",
   description:
-    "Private, partner, and small-group lacrosse goalie training for youth and high school athletes across Ann Arbor, Ypsilanti, and Metro Detroit: footwork, hand speed, angles, and game-speed decision-making.",
+    "Private, partner, and small-group lacrosse goalie training for girls' and boys' goalies from youth through high school, plus women's and men's college goalies, across Ann Arbor and Metro Detroit: footwork, hand speed, angles, and game-speed decision-making.",
 };
 
 const focusAreas = [...new Set(services.flatMap((s) => s.focusAreas))];
@@ -91,6 +92,66 @@ export default function Training() {
         </div>
       </section>
 
+      {/* Who we train */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
+              Who We Train
+            </p>
+            <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
+              Goalie development at every stage.
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-ink/65">
+              Legacy Lacrosse Training welcomes girls&apos; and boys&apos;
+              goalies from their first seasons through high school, along
+              with women&apos;s and men&apos;s college goalies looking for
+              focused position work. The fundamentals stay central, while
+              the coaching adapts to the athlete&apos;s experience, goals,
+              ruleset, and pace of play.
+            </p>
+            <p className="mt-4 text-base font-medium leading-relaxed text-ink">
+              Training is open to girls&apos; and women&apos;s goalies and
+              boys&apos; and men&apos;s goalies alike.
+            </p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-12">
+            <div className="border-t border-line pt-6">
+              <h3 className="font-display text-xl tracking-tight text-ink">
+                Youth Goalies
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                First-time and developing goalies building stance, footwork,
+                positioning, tracking, hand-eye coordination, confidence, and
+                an understanding of the position.
+              </p>
+            </div>
+            <div className="border-t border-line pt-6">
+              <h3 className="font-display text-xl tracking-tight text-ink">
+                High School Goalies
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                JV and varsity athletes developing consistency at game speed:
+                positioning, save mechanics, communication, clearing,
+                decision-making, rebound control, and composure.
+              </p>
+            </div>
+            <div className="border-t border-line pt-6">
+              <h3 className="font-display text-xl tracking-tight text-ink">
+                College Goalies
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Women&apos;s and men&apos;s college goalies looking for
+                focused supplemental and off-season position work, detailed
+                technical correction, and high-speed reps to continue
+                refining the position.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Offerings */}
       <section className="border-b border-line bg-paper-2/60">
         <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
@@ -148,6 +209,19 @@ export default function Training() {
               </div>
             ))}
           </div>
+
+          <p className="mt-10 max-w-2xl text-sm leading-relaxed text-ink-muted">
+            Looking for position-specific work for your goalie room?
+            Small-group training can work for school, club, and college
+            programs.{" "}
+            <Link
+              href="/contact"
+              className="text-ink underline underline-offset-2 hover:text-ink-muted"
+            >
+              Reach out
+            </Link>{" "}
+            to discuss the right format.
+          </p>
         </div>
       </section>
 
