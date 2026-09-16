@@ -20,6 +20,20 @@ test("homepage renders hero, nav, and primary CTA", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("homepage communicates youth-through-college availability", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.getByRole("main");
+  await expect(
+    main.getByText("goalies from their first seasons through college", {
+      exact: false,
+    })
+  ).toBeVisible();
+  await expect(
+    main.getByText("Girls' & Boys' / Women's & Men's", { exact: false })
+  ).toBeVisible();
+});
+
 test("mobile menu opens, exposes current nav state, and closes on Escape", async ({
   page,
 }) => {

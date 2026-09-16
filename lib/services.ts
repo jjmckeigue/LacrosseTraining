@@ -62,7 +62,7 @@ export const services: ServiceOffering[] = [
     description:
       "Station-based, game-speed training that mirrors the pace and pressure of a real game.",
     bestFor:
-      "Teams or friend groups who want game-speed pressure, rotation, and realistic in-game pacing.",
+      "School, club, or college goalie rooms and friend groups that want game-speed pressure, rotation, and realistic in-game pacing.",
     focusAreas: [
       "Station-based reps",
       "Game-speed shot volume",

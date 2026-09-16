@@ -42,10 +42,16 @@ export default function Home() {
               Coaching built for the crease.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-paper/70">
-              Private and small-group training for youth and high school
-              goalies across Ann Arbor, Ypsilanti, and Metro Detroit, built
-              around footwork, hand speed, angles, and the decision-making
-              that separates good goalies from great ones.
+              Private and small-group training for goalies from their first
+              seasons through college. Girls&apos; and boys&apos; goalies,
+              along with women&apos;s and men&apos;s college athletes, are
+              welcome — with every session built around footwork, hand
+              speed, angles, communication, clearing, and game-speed
+              decision-making.
+            </p>
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-paper-muted">
+              Youth &middot; High School &middot; College — Girls&apos; &amp;
+              Boys&apos; / Women&apos;s &amp; Men&apos;s
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Button href="/book" variant="primary">
@@ -98,8 +104,8 @@ export default function Home() {
               {siteConfig.coach.name} is a four-year NCAA Division III
               varsity goalie, a graduate of Hanover College, who has spent
               years refining the technical and mental sides of the position.
-              He now brings that same approach to youth and high school
-              goalies across the Ann Arbor and Metro Detroit area.
+              He now brings that same approach to goalies from youth
+              through college across the Ann Arbor and Metro Detroit area.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-ink/65">
               He&apos;s coached goalies since 2016, led the South Bend Bears
