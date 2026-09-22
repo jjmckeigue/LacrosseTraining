@@ -12,10 +12,19 @@ const FROM_EMAIL =
   process.env.RESEND_FROM_EMAIL || "Legacy Lacrosse Training <onboarding@resend.dev>";
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL || siteConfig.contact.email;
 
+/**
+ * Thrown with Resend's own error *category* (e.g. `invalid_api_key`,
+ * `invalid_from_address`) as the message, never the free-text
+ * `error.message`, which could echo request details. The category is a
+ * fixed, finite code — safe to log — and is the difference between a
+ * silent "something failed" and knowing which env var to check.
+ */
+export class ContactSendError extends Error {}
+
 export async function sendContactNotification(submission: ContactSubmission): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    throw new Error("RESEND_API_KEY is not configured");
+    throw new ContactSendError("missing_api_key");
   }
 
   const resend = new Resend(apiKey);
@@ -40,6 +49,6 @@ export async function sendContactNotification(submission: ContactSubmission): Pr
   });
 
   if (error) {
-    throw new Error(error.message);
+    throw new ContactSendError(error.name);
   }
 }
