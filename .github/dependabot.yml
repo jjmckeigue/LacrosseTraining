@@ -4,6 +4,27 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      # react and react-dom must stay on the same version; bumping one
+      # without the other breaks `npm ci` (lockfile/package.json go out of
+      # sync) and risks a runtime version mismatch. Bundling them (and their
+      # type packages) into one PR keeps that from happening again.
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+    ignore:
+      # typescript-eslint (bundled in eslint-config-next) does not support
+      # TypeScript 6+ yet; a major bump here breaks `npm run lint` outright.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # eslint-plugin-react (also bundled in eslint-config-next) relies on
+      # an ESLint 9 API that ESLint 10 removed; a major bump here breaks
+      # `npm run lint` outright.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
