@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
     "What information Legacy Lacrosse Training collects through this website, why, and which outside services help run it.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function Privacy() {

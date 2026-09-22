@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Book Training",
   description:
     "Choose a private, partner, or small-group goalie training format and schedule a session online.",
+  alternates: { canonical: "/book" },
 };
 
 export default async function Book(props: PageProps<"/book">) {

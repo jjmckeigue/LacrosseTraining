@@ -52,6 +52,20 @@ test.describe("SEO fundamentals", () => {
     expect(data).not.toHaveProperty("priceRange");
   });
 
+  test("every real route declares a canonical URL on the production domain", async ({
+    page,
+  }) => {
+    for (const route of REAL_ROUTES) {
+      await page.goto(route);
+      const canonical = await page
+        .locator('link[rel="canonical"]')
+        .getAttribute("href");
+      // Next.js normalizes the homepage canonical without a trailing slash.
+      const expected = route === "/" ? siteConfig.url : `${siteConfig.url}${route}`;
+      expect(canonical).toBe(expected);
+    }
+  });
+
   test("unknown routes render the branded 404 page", async ({ page }) => {
     const response = await page.goto("/this-route-does-not-exist");
     expect(response?.status()).toBe(404);

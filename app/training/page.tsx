@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Lacrosse Goalie Training in Ann Arbor & Metro Detroit",
   description:
     "Private, partner, and small-group lacrosse goalie training for girls' and boys' goalies from youth through high school, plus women's and men's college goalies, across Ann Arbor and Metro Detroit: footwork, hand speed, angles, and game-speed decision-making.",
+  alternates: { canonical: "/training" },
 };
 
 const focusAreas = [...new Set(services.flatMap((s) => s.focusAreas))];
@@ -309,6 +310,43 @@ export default function Training() {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Before you train */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">
+              Before You Train
+            </p>
+            <h2 className="mt-4 font-display text-4xl tracking-tight text-ink">
+              A few things to know before you book.
+            </h2>
+          </div>
+
+          <div className="mt-16 flex max-w-3xl flex-col">
+            <div className="border-t border-line py-8">
+              <h3 className="font-display text-xl tracking-tight text-ink">
+                Where do sessions take place?
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Sessions are based in Ann Arbor / Southeast Michigan. The
+                exact training location is confirmed after you book.
+              </p>
+            </div>
+            <div className="border-t border-line py-8 last:border-b">
+              <h3 className="font-display text-xl tracking-tight text-ink">
+                What happens after I book?
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink/65">
+                Booking runs through Cal.com&apos;s calendar system, which
+                confirms your scheduled time directly. If anything comes up
+                beforehand or you&apos;re not sure what to book, use the
+                contact page to reach out.
+              </p>
+            </div>
           </div>
         </div>
       </section>

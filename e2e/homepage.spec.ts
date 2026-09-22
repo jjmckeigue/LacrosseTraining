@@ -30,8 +30,21 @@ test("homepage communicates youth-through-college availability", async ({ page }
     })
   ).toBeVisible();
   await expect(
-    main.getByText("Girls' & Boys' / Women's & Men's", { exact: false })
+    main.getByText("Youth · High School · College", { exact: false })
   ).toBeVisible();
+});
+
+test("the dormant testimonials section does not render while there are no testimonials", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await expect(
+    page.getByRole("heading", { name: "What Families Are Saying" })
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Built on trust, one session at a time." })
+  ).toHaveCount(0);
 });
 
 test("mobile menu opens, exposes current nav state, and closes on Escape", async ({

@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import Testimonials, { type Testimonial } from "@/components/Testimonials";
 import { services } from "@/lib/services";
 import { siteConfig } from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const testimonials: Testimonial[] = [];
 
@@ -50,8 +55,7 @@ export default function Home() {
               decision-making.
             </p>
             <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-paper-muted">
-              Youth &middot; High School &middot; College — Girls&apos; &amp;
-              Boys&apos; / Women&apos;s &amp; Men&apos;s
+              Youth &middot; High School &middot; College
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Button href="/book" variant="primary">

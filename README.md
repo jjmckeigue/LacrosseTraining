@@ -15,9 +15,10 @@ serving Ann Arbor, Ypsilanti, and Metro Detroit.
   notification to Legacy when the `/contact` form is submitted; see
   [Contact form (Resend) setup](#contact-form-resend-setup)
 - [Vercel](https://vercel.com) for deployment, cookieless web analytics
-  (`@vercel/analytics`, mounted once in `app/layout.tsx`), and edge
-  security (DDoS mitigation, WAF, bot/rate-limit protection at the
-  platform level); [Vercel BotID](https://vercel.com/docs/botid)
+  (`@vercel/analytics`, mounted once in `app/layout.tsx`), Speed Insights
+  (`@vercel/speed-insights`, same location — real-user Core Web Vitals,
+  no PII), and edge security (DDoS mitigation, WAF, bot/rate-limit
+  protection at the platform level); [Vercel BotID](https://vercel.com/docs/botid)
   additionally protects `POST /contact` — see
   [Security](#security) and
   [Contact form (Resend) setup](#contact-form-resend-setup)
@@ -338,6 +339,22 @@ without first inventorying and testing Cal.com's actual requirements (in a
 Report-Only pass, verified against real `/book` traffic on desktop and
 mobile) risks silently breaking booking. Add one only after that process,
 not as a default hardening step.
+
+## Analytics
+
+[Vercel Web Analytics](https://vercel.com/docs/analytics) (`@vercel/analytics`)
+and [Vercel Speed Insights](https://vercel.com/docs/speed-insights)
+(`@vercel/speed-insights`) are mounted once in `app/layout.tsx`. Both are
+cookieless and, in their default configuration used here, collect only
+page views/routes and real-user Core Web Vitals — never names, emails,
+phone numbers, message content, or anything from the Cal.com booking flow.
+
+No custom analytics events are implemented. Adding them (e.g. tracking a
+"Book Training" click or a completed Contact submission) would need
+confirming what the current Vercel plan actually supports first, so this
+is deferred rather than guessed at. If added later, keep events to
+non-PII signals only (which CTA, which page — never form field values or
+booking details).
 
 ## Security
 
