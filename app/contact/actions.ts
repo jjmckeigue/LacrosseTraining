@@ -2,7 +2,7 @@
 
 import { checkBotId } from "botid/server";
 import { validateContactSubmission, type ContactField } from "@/lib/contact";
-import { sendContactNotification } from "@/lib/resend";
+import { ContactSendError, sendContactNotification } from "@/lib/resend";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
@@ -54,11 +54,14 @@ export async function submitContactForm(
 
   try {
     await sendContactNotification(result.data);
-  } catch {
-    // Static marker only: never log the submission or a third-party error
-    // message here, since a provider-generated message could unexpectedly
-    // include contact content or implementation details.
-    console.error("contact_send_failed");
+  } catch (error) {
+    // Log Resend's fixed error *category* only (e.g. "missing_api_key",
+    // "invalid_from_address") — never the submission or a free-text
+    // provider error message, which could unexpectedly include contact
+    // content or implementation details. The category is what actually
+    // makes a failure diagnosable from Vercel's logs.
+    const category = error instanceof ContactSendError ? error.message : "unknown";
+    console.error("contact_send_failed", category);
     return { status: "error", message: GENERIC_ERROR_MESSAGE };
   }
 
