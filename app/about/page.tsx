@@ -6,6 +6,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: `About ${siteConfig.coach.name}`,
   description: `${siteConfig.coach.name}, a four-year NCAA Division III goalie, founded ${siteConfig.name} and coaches goalies from youth through college across Ann Arbor and Metro Detroit.`,
+  alternates: { canonical: "/about" },
 };
 
 export default function About() {

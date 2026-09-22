@@ -75,6 +75,24 @@ test("the goalie-room CTA links to Contact", async ({ page }) => {
   );
 });
 
+test("the Before You Train section answers location and booking questions", async ({
+  page,
+}) => {
+  await page.goto("/training");
+
+  const main = page.getByRole("main");
+  await expect(
+    main.getByRole("heading", { level: 2, name: "A few things to know before you book." })
+  ).toBeVisible();
+
+  // Audience and format are already covered in detail by the Who We Train
+  // and Offerings/Which Format Fits sections above, so this section only
+  // adds the two things not already answered elsewhere on the page.
+  for (const question of ["Where do sessions take place?", "What happens after I book?"]) {
+    await expect(main.getByRole("heading", { level: 3, name: question })).toBeVisible();
+  }
+});
+
 test("mobile: training page is usable with no horizontal overflow", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto("/training");

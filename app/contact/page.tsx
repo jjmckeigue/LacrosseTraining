@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Questions about training formats or scheduling? Send a message and Legacy Lacrosse Training will get back to you directly.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function Contact() {
